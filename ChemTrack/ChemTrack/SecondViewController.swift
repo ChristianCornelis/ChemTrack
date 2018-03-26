@@ -19,6 +19,7 @@ class SecondViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
         //TODO: Add layout.
+        //need to import from Sketch.
     }
 
 
