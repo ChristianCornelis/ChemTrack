@@ -22,6 +22,7 @@ class FirstViewController: UIViewController {
         super.didReceiveMemoryWarning()
         print ("hello world")
         // Dispose of any resources that can be recreated.
+        //hello from christian
     }
 
 
