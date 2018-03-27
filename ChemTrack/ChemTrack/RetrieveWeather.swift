@@ -21,6 +21,13 @@ class RetrieveWeather{
                 } else {
                     if let usable = data {
                         print ("usable data size:\n\(usable)\n")
+                        
+                        do{
+                            let thisWeatherData = try JSONSerialization.jsonObject(with: usable, options: JSONSerialization.ReadingOptions.mutableContainers) as! [String: AnyObject]
+                            print(thisWeatherData)
+                        } catch let error_Json as NSError{
+                            print("There was a json error \(error_Json.description)")
+                        }
                     }
                 }
             })

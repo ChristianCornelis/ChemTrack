@@ -7,18 +7,50 @@
 //
 
 import UIKit
+import CoreLocation
 
-class FirstViewController: UIViewController {
+struct saveContent {
+    let windSpeed: Double?
+    let windDirection: Int?
+    let dailyMax: Double?
+    let dailyMin: Double?
+    let temp: Double?
+    let description: String?
+}
+class FirstViewController: UIViewController, CLLocationManagerDelegate {
     var theWeather = RetrieveWeather()
+    let lctn = CLLocationManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        theWeather.getWeather(Latitude: "43.5448048", Longitude: "-80.2481666")
+        
+        lctn.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled(){
+            lctn.delegate = self
+            lctn.desiredAccuracy = kCLLocationAccuracyBest
+            lctn.startUpdatingLocation()
+        }
+//        var currentLocation: CLLocation!
+//        if( CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse ||
+//            CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways){
+//
+//            currentLocation = lctn.location
+//
+//        }
+//        print("currentlocation = lat:\(currentLocation.coordinate.latitude) long: \(currentLocation.coordinate.longitude)")
+//        theWeather.getWeather(Latitude: "43.5448048", Longitude: "-80.2481666")
         // changed by gurjap i wonder if this works
         // gurjap branch test
         //hello from gurjap
         // Do any additional setup after loading the view, typically from a nib.
     }
-
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            print(location.coordinate)
+            theWeather.getWeather(Latitude: String(location.coordinate.latitude), Longitude: String(location.coordinate.latitude))
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         print ("hello world")
