@@ -9,9 +9,10 @@
 import UIKit
 
 class FirstViewController: UIViewController {
-
+    var theWeather = RetrieveWeather()
     override func viewDidLoad() {
         super.viewDidLoad()
+        theWeather.getWeather(Latitude: "43.5448048", Longitude: "-80.2481666")
         // changed by gurjap i wonder if this works
         // gurjap branch test
         //hello from gurjap
