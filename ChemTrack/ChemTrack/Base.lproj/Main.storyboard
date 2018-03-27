@@ -239,12 +239,21 @@
                                 <rect key="frame" x="236" y="556" width="121" height="57"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="Save" backgroundImage="Rectangle 3 Copy"/>
+                                <connections>
+                                    <action selector="saveChemical:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="DuS-bm-M3o"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="O1u-W8-tvY"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Second" image="second" id="cPa-gy-q4n"/>
+                    <connections>
+                        <outlet property="chemNameInput" destination="UKJ-w5-gR0" id="8ts-8y-anI"/>
+                        <outlet property="chemTypeInput" destination="boe-nK-7yN" id="3Qj-NT-I0v"/>
+                        <outlet property="fieldInput" destination="2W9-hn-vrY" id="1KT-7U-07p"/>
+                        <outlet property="fieldSizeInput" destination="9d7-ga-4aH" id="eTc-br-nYk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
