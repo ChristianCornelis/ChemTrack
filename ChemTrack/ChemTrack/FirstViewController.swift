@@ -17,10 +17,15 @@ struct saveContent {
     let temp: Double?
     let description: String?
 }
-class FirstViewController: UIViewController, CLLocationManagerDelegate {
+
+class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource{
     var theWeather = RetrieveWeather()
     let lctn = CLLocationManager()
+    let elements = ["horse", "cat", "dog", "potato","horse", "cat", "dog", "potato","horse", "cat", "dog", "potato"]
+    var sprays = [SprayClass]()
     
+    
+    @IBOutlet var theTableView: UITableView!
     @IBAction func weatherFunc(_ sender: Any) {
         lctn.requestWhenInUseAuthorization()
         
@@ -32,21 +37,30 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        let anObj1 = SprayClass(Name: "Spray 1", fieldName: "Birch Street Field", fieldSize: "2 acres", date: "somedate", weather: "24C", tank: 2)
+        let anObj2 = SprayClass(Name: "Spray 2", fieldName: "Birch Street Field", fieldSize: "2 acres", date: "somedate", weather: "24C", tank: 2)
         
         
-//        var currentLocation: CLLocation!
-//        if( CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse ||
-//            CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways){
-//
-//            currentLocation = lctn.location
-//
-//        }
-//        print("currentlocation = lat:\(currentLocation.coordinate.latitude) long: \(currentLocation.coordinate.longitude)")
-//        theWeather.getWeather(Latitude: "43.5448048", Longitude: "-80.2481666")
-        // changed by gurjap i wonder if this works
-        // gurjap branch test
-        //hello from gurjap
+        sprays.append(anObj1)
+        sprays.append(anObj2)
+        
+        theTableView.delegate = self
+        theTableView.dataSource = self
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return sprays.count
+    }
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = theTableView.dequeueReusableCell(withIdentifier: "customCell") as! customDisplayCell
+        //cell.name_lbl.text = sprays[indexPath.row].Name
+        //cell.name_lbl.text = sprays[indexPath.row].Name
+        /*cell.fieldName_lbl.text = sprays[indexPath.row].fieldName
+        cell.fieldSize_lbl.text = sprays[indexPath.row].fieldSize
+        cell.date_lbl.text = sprays[indexPath.row].Date
+        cell.weather_lbl.text = sprays[indexPath.row].weather
+        cell.tanks_lbl.text = String(sprays[indexPath.row].tank)*/
+        return cell
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
