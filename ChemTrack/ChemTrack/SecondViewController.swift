@@ -66,7 +66,7 @@ class SecondViewController: UIViewController {
         let chemTypeToAdd = chemTypeInput.text
         let fieldToAdd = fieldInput.text
         let fieldSizeToAdd = Double(fieldSizeInput.text!)
-        var dateFormatter = DateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateToAdd = dateFormatter.string(from: dateInput.date)
         print(date)
