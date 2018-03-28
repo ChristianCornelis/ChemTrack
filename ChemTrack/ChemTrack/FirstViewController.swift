@@ -49,17 +49,17 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         // Do any additional setup after loading the view, typically from a nib.
     }
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return elements.count
+        return sprays.count
     }
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = theTableView.dequeueReusableCell(withIdentifier: "customCell") as! customDisplayCell
-        //cell.name_lbl.text = sprays[indexPath.row].Name
-        //cell.name_lbl.text = sprays[indexPath.row].Name
-        /*cell.fieldName_lbl.text = sprays[indexPath.row].fieldName
+        cell.cellView.layer.cornerRadius = 8
+        cell.name_lbl.text = sprays[indexPath.row].Name
+        cell.fieldName_lbl.text = sprays[indexPath.row].fieldName
         cell.fieldSize_lbl.text = sprays[indexPath.row].fieldSize
         cell.date_lbl.text = sprays[indexPath.row].Date
         cell.weather_lbl.text = sprays[indexPath.row].weather
-        cell.tanks_lbl.text = String(sprays[indexPath.row].tank)*/
+        cell.tanks_lbl.text = String(sprays[indexPath.row].tank)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
