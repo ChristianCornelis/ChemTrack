@@ -15,8 +15,8 @@ class SecondViewController: UIViewController {
     let chemName = Expression<String>("chemName")
     let chemType = Expression<String>("chemType")
     let field = Expression<String>("field")
-    let fieldSize = Expression<String>("fieldSize")
-    let date = Expression<Date>("date")
+    let fieldSize = Expression<Double>("fieldSize")
+    let date = Expression<String>("date")
     let location = Expression<String>("location")
     let rate = Expression<Double>("rate")
     let weather = Expression<String>("weather")
@@ -35,6 +35,7 @@ class SecondViewController: UIViewController {
     
     @IBAction func saveChemical(_ sender: UIButton) {
         print(chemNameInput.text!)
+        createChemical()
     }
     
     func createDB(){
@@ -61,7 +62,52 @@ class SecondViewController: UIViewController {
     }
     
     func createChemical(){
+        let chemNameToAdd = chemNameInput.text
+        let chemTypeToAdd = chemTypeInput.text
+        let fieldToAdd = fieldInput.text
+        let fieldSizeToAdd = Double(fieldSizeInput.text!)
+        var dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateToAdd = dateFormatter.string(from: dateInput.date)
+        print(date)
+        let locationToAdd = locationInput.text
+        let rateToAdd = Double(rateInput.text!)
+        let weatherToAdd = weatherInput.text
+        let tankSizeToAdd = Double(tankSizeInput.text!)
         
+        /*print(chemNameToAdd)
+        print(chemTypeToAdd)
+        print(fieldToAdd)
+        if (chemNameToAdd == "" || chemTypeToAdd == "" || fieldToAdd == "" || fieldSizeToAdd == nil)
+        {
+            let alert = UIAlertController(title: "ErrorHandle", message: "Please fill in all fields", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
+                NSLog("The \"OK\" alert occured.")}))
+            present(alert, animated: true, completion: nil)
+        }
+        else if (dateToAdd == "" || locationToAdd == "" || rateToAdd == nil || weatherToAdd == "" || tankSizeToAdd == nil)
+        {
+            let alert = UIAlertController(title: "ErrorHandle", message: "Please fill in all fields", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
+                NSLog("The \"OK\" alert occured.")}))
+            present(alert, animated: true, completion: nil)
+        }
+        else{*/
+        let insertChemical = self.chemicalsTable.insert(self.chemName <- chemNameToAdd!, self.chemType <- chemTypeToAdd!, self.field <- fieldToAdd!, self.fieldSize <- fieldSizeToAdd!, self.date <- dateToAdd, self.location <- locationToAdd!, self.rate <- rateToAdd!, self.weather <- weatherToAdd!, self.tankSize <- tankSizeToAdd!)
+        
+        do{
+            try self.db.run(insertChemical)
+            print("Chemical inserted successfully")
+            let chemicals = try self.db.prepare(self.chemicalsTable)
+            for chemical in chemicals{
+                print("chemical: \(chemical[self.chemName])")
+                print("date: \(chemical[self.date])")
+            }
+        }
+        catch{
+            print(error)
+        }
+        //}
     }
     override func viewDidLoad() {
         super.viewDidLoad()
