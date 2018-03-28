@@ -25,6 +25,15 @@ class RetrieveWeather{
                         do{
                             let thisWeatherData = try JSONSerialization.jsonObject(with: usable, options: JSONSerialization.ReadingOptions.mutableContainers) as! [String: AnyObject]
                             print(thisWeatherData)
+                            print("temp: \(thisWeatherData["main"]!["temp"]!!)")
+                            print("tempMax: \(thisWeatherData["main"]!["temp_max"]!!)")
+//                            print("Latitude: \(thisWeatherData["coord"]!["lat"]!!)")
+                            print("tempMin: \(thisWeatherData["main"]!["temp_min"]!!)")
+//                            print(thisWeatherData["description"]!)
+//                            print(thisWeatherData["wind"]!)
+                            print("Wind: \(thisWeatherData["wind"]!["deg"]!!) at \(thisWeatherData["wind"]!["speed"]!!)")
+                            //print("weather: \(thisWeatherData["weather"]!["description"]!!)")
+                           
                         } catch let error_Json as NSError{
                             print("There was a json error \(error_Json.description)")
                         }

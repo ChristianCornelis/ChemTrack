@@ -21,16 +21,19 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
     var theWeather = RetrieveWeather()
     let lctn = CLLocationManager()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    @IBAction func weatherFunc(_ sender: Any) {
         lctn.requestWhenInUseAuthorization()
         
         if CLLocationManager.locationServicesEnabled(){
             lctn.delegate = self
-            lctn.desiredAccuracy = kCLLocationAccuracyBest
+            lctn.desiredAccuracy = kCLLocationAccuracyKilometer
             lctn.startUpdatingLocation()
         }
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
 //        var currentLocation: CLLocation!
 //        if( CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse ||
 //            CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways){
@@ -48,6 +51,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             print(location.coordinate)
+            lctn.stopUpdatingLocation()
             theWeather.getWeather(Latitude: String(location.coordinate.latitude), Longitude: String(location.coordinate.latitude))
         }
     }
