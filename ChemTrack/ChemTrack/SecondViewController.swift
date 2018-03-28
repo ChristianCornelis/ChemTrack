@@ -34,6 +34,11 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var rateInput: UITextField!
     @IBOutlet weak var weatherInput: UITextField!
     @IBOutlet weak var tankSizeInput: UITextField!
+    @IBOutlet var tempInput: UITextField!
+    @IBOutlet var dailyHighInput: UITextField!
+    @IBOutlet var dailyLowInput: UITextField!
+    @IBOutlet var windSpeedInput: UITextField!
+    @IBOutlet var windDirectionInput: UITextField!
     
     @IBAction func saveChemical(_ sender: UIButton) {
         print(chemNameInput.text!)
@@ -77,9 +82,9 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate {
         let weatherToAdd = weatherInput.text
         let tankSizeToAdd = Double(tankSizeInput.text!)
         
-        print(chemNameToAdd)
-        print(chemTypeToAdd)
-        print(fieldToAdd)
+//        print(chemNameToAdd)
+//        print(chemTypeToAdd)
+//        print(fieldToAdd)
         if (chemNameToAdd == "" || chemTypeToAdd == "" || fieldToAdd == "" || fieldSizeToAdd == nil)
         {
             let alert = UIAlertController(title: "ErrorHandle", message: "Please fill in all fields", preferredStyle: .alert)
@@ -129,14 +134,23 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate {
             lctn.stopUpdatingLocation()
             theWeather.getWeather(Latitude: String(location.coordinate.latitude), Longitude: String(location.coordinate.latitude)) { (isSuccess, weatherInfo) in
                 if isSuccess {
-                    print("Success: \(weatherInfo)")
+//                    print("Success: \(weatherInfo)")
+                    DispatchQueue.main.async {
+                        self.tempInput.text = weatherInfo[0]
+                        self.dailyHighInput.text = weatherInfo[1]
+                        self.dailyLowInput.text = weatherInfo[2]
+                        self.windSpeedInput.text = weatherInfo[3]
+                        self.windDirectionInput.text = weatherInfo[4]
+                    }
+                    
                 }else {
                     print("Failure: Unable To Get String")
                 }
             }
         }
     }
-
+    /******End of weather functions*******/
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.

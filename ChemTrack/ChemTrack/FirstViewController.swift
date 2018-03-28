@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreLocation
 
 struct saveContent {
     let windSpeed: Double?
@@ -18,23 +17,13 @@ struct saveContent {
     let description: String?
 }
 
-class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource{
-    var theWeather = RetrieveWeather()
-    let lctn = CLLocationManager()
-    let elements = ["horse", "cat", "dog", "potato","horse", "cat", "dog", "potato","horse", "cat", "dog", "potato"]
+class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+
     var sprays = [SprayClass]()
     
     
     @IBOutlet var theTableView: UITableView!
-    @IBAction func weatherFunc(_ sender: Any) {
-        lctn.requestWhenInUseAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled(){
-            lctn.delegate = self
-            lctn.desiredAccuracy = kCLLocationAccuracyKilometer
-            lctn.startUpdatingLocation()
-        }
-    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let anObj1 = SprayClass(Name: "Spray 1", fieldName: "Birch Street Field", fieldSize: "2 acres", date: "somedate", weather: "24C", tank: 2)
@@ -65,13 +54,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 145
     }
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            print(location.coordinate)
-            lctn.stopUpdatingLocation()
-            theWeather.getWeather(Latitude: String(location.coordinate.latitude), Longitude: String(location.coordinate.latitude))
-        }
-    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         print ("hello world")
