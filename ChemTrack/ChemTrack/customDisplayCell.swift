@@ -12,21 +12,16 @@ class customDisplayCell: UITableViewCell {
 
     @IBOutlet var cellView: UIView!
     @IBOutlet var name_lbl: UILabel!
-    @IBOutlet var fieldName_lbl: UILabel!
-    @IBOutlet var fieldSize_lbl: UILabel!
-    @IBOutlet var date_lbl: UILabel!
-    @IBOutlet var weather_lbl: UILabel!
-    @IBOutlet var tanks_lbl: UILabel!
+//    @IBOutlet var fieldName_lbl: UILabel!
+//    @IBOutlet var fieldSize_lbl: UILabel!
+//    @IBOutlet var date_lbl: UILabel!
+//    @IBOutlet var weather_lbl: UILabel!
+//    @IBOutlet var tanks_lbl: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
 
 }

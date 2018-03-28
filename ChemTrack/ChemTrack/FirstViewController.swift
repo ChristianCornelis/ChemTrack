@@ -49,7 +49,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         // Do any additional setup after loading the view, typically from a nib.
     }
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sprays.count
+        return elements.count
     }
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = theTableView.dequeueReusableCell(withIdentifier: "customCell") as! customDisplayCell
@@ -61,6 +61,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         cell.weather_lbl.text = sprays[indexPath.row].weather
         cell.tanks_lbl.text = String(sprays[indexPath.row].tank)*/
         return cell
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 145
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
