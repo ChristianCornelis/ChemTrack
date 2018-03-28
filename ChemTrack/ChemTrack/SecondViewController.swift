@@ -75,7 +75,7 @@ class SecondViewController: UIViewController {
         let weatherToAdd = weatherInput.text
         let tankSizeToAdd = Double(tankSizeInput.text!)
         
-        /*print(chemNameToAdd)
+        print(chemNameToAdd)
         print(chemTypeToAdd)
         print(fieldToAdd)
         if (chemNameToAdd == "" || chemTypeToAdd == "" || fieldToAdd == "" || fieldSizeToAdd == nil)
@@ -92,22 +92,22 @@ class SecondViewController: UIViewController {
                 NSLog("The \"OK\" alert occured.")}))
             present(alert, animated: true, completion: nil)
         }
-        else{*/
-        let insertChemical = self.chemicalsTable.insert(self.chemName <- chemNameToAdd!, self.chemType <- chemTypeToAdd!, self.field <- fieldToAdd!, self.fieldSize <- fieldSizeToAdd!, self.date <- dateToAdd, self.location <- locationToAdd!, self.rate <- rateToAdd!, self.weather <- weatherToAdd!, self.tankSize <- tankSizeToAdd!)
-        
-        do{
-            try self.db.run(insertChemical)
-            print("Chemical inserted successfully")
-            let chemicals = try self.db.prepare(self.chemicalsTable)
-            for chemical in chemicals{
-                print("chemical: \(chemical[self.chemName])")
-                print("date: \(chemical[self.date])")
+        else{
+            let insertChemical = self.chemicalsTable.insert(self.chemName <- chemNameToAdd!, self.chemType <- chemTypeToAdd!, self.field <- fieldToAdd!, self.fieldSize <- fieldSizeToAdd!, self.date <- dateToAdd, self.location <- locationToAdd!, self.rate <- rateToAdd!, self.weather <- weatherToAdd!, self.tankSize <- tankSizeToAdd!)
+            
+            do{
+                try self.db.run(insertChemical)
+                print("Chemical inserted successfully")
+                let chemicals = try self.db.prepare(self.chemicalsTable)
+                for chemical in chemicals{
+                    print("chemical: \(chemical[self.chemName])")
+                    print("date: \(chemical[self.date])")
+                }
+            }
+            catch{
+                print(error)
             }
         }
-        catch{
-            print(error)
-        }
-        //}
     }
     override func viewDidLoad() {
         super.viewDidLoad()
