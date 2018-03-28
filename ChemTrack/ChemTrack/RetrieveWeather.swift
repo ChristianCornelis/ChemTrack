@@ -11,7 +11,13 @@ class RetrieveWeather{
     private let owmBaseURL = "http://api.openweathermap.org/data/2.5/weather?"
     private let apiKey = "c912e6afe3ddebedf6506cab7a8c4b4c"
     
-    func getWeather(Latitude: String,Longitude: String){
+    func getWeather(Latitude: String,Longitude: String, completion: @escaping gotData){
+        var returnTemp:String = ""
+        var returnTempMax:String = ""
+        var returnTempMin:String = ""
+        var returnWindSpeed:String = ""
+        var returnWindDegree:String = ""
+        
         let urlString = URL(string: "\(owmBaseURL)lat=\(Latitude)&lon=\(Longitude)&APPID=\(apiKey)")
         
         if let url = urlString{
@@ -24,15 +30,14 @@ class RetrieveWeather{
                         
                         do{
                             let thisWeatherData = try JSONSerialization.jsonObject(with: usable, options: JSONSerialization.ReadingOptions.mutableContainers) as! [String: AnyObject]
+                            
                             print(thisWeatherData)
-                            print("temp: \(thisWeatherData["main"]!["temp"]!!)")
-                            print("tempMax: \(thisWeatherData["main"]!["temp_max"]!!)")
-//                            print("Latitude: \(thisWeatherData["coord"]!["lat"]!!)")
-                            print("tempMin: \(thisWeatherData["main"]!["temp_min"]!!)")
-//                            print(thisWeatherData["description"]!)
-//                            print(thisWeatherData["wind"]!)
-                            print("Wind: \(thisWeatherData["wind"]!["deg"]!!) at \(thisWeatherData["wind"]!["speed"]!!)")
-                            //print("weather: \(thisWeatherData["weather"]!["description"]!!)")
+                            returnTemp = String(describing: thisWeatherData["main"]!["temp"]!!)
+                            returnTempMax = String(describing: thisWeatherData["main"]!["temp_max"]!!)
+                            returnTempMin = String(describing: thisWeatherData["main"]!["temp_min"]!!)
+                            returnWindSpeed = String(describing: thisWeatherData["wind"]!["deg"]!!)
+                            returnWindDegree = String(describing: thisWeatherData["wind"]!["speed"]!!)
+                            completion(true,[returnTemp,returnTempMax,returnTempMin,returnWindSpeed,returnWindDegree])
                            
                         } catch let error_Json as NSError{
                             print("There was a json error \(error_Json.description)")
