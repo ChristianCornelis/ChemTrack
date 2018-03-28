@@ -251,8 +251,13 @@
                     <connections>
                         <outlet property="chemNameInput" destination="UKJ-w5-gR0" id="8ts-8y-anI"/>
                         <outlet property="chemTypeInput" destination="boe-nK-7yN" id="3Qj-NT-I0v"/>
+                        <outlet property="dateInput" destination="BWZ-sX-peX" id="xuO-lg-Nb6"/>
                         <outlet property="fieldInput" destination="2W9-hn-vrY" id="1KT-7U-07p"/>
                         <outlet property="fieldSizeInput" destination="9d7-ga-4aH" id="eTc-br-nYk"/>
+                        <outlet property="locationInput" destination="gfn-mx-k8J" id="EAn-Mf-DVG"/>
+                        <outlet property="rateInput" destination="2vy-bH-beQ" id="6ev-35-YUp"/>
+                        <outlet property="tankSizeInput" destination="2QF-cf-H1D" id="Tp2-6u-nvm"/>
+                        <outlet property="weatherInput" destination="7jw-YA-2es" id="4b6-fK-qIH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>

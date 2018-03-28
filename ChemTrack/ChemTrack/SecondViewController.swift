@@ -22,15 +22,21 @@ class SecondViewController: UIViewController {
     let weather = Expression<String>("weather")
     let tankSize = Expression<Double>("tankSize")
 
+    //input field declarations
     @IBOutlet weak var chemNameInput: UITextField!
     @IBOutlet weak var chemTypeInput: UITextField!
     @IBOutlet weak var fieldInput: UITextField!
     @IBOutlet weak var fieldSizeInput: UITextField!
-    
+    @IBOutlet weak var dateInput: UIDatePicker!
+    @IBOutlet weak var locationInput: UITextField!
+    @IBOutlet weak var rateInput: UITextField!
+    @IBOutlet weak var weatherInput: UITextField!
+    @IBOutlet weak var tankSizeInput: UITextField!
     
     @IBAction func saveChemical(_ sender: UIButton) {
         print(chemNameInput.text!)
     }
+    
     func createDB(){
         let toCreate = self.chemicalsTable.create { (t) in
             t.column(self.rowID, primaryKey: true)
@@ -52,6 +58,10 @@ class SecondViewController: UIViewController {
         catch{
             print(error)
         }
+    }
+    
+    func createChemical(){
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
