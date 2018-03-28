@@ -8,7 +8,9 @@
 
 import UIKit
 import SQLite
-class SecondViewController: UIViewController {
+import CoreLocation
+
+class SecondViewController: UIViewController, CLLocationManagerDelegate {
     var db: Connection!
     let chemicalsTable = Table("chemicals")
     let rowID = Expression<Int>("rowID")
@@ -109,6 +111,32 @@ class SecondViewController: UIViewController {
             }
         }
     }
+    /******functions for getting the weather*******/
+    var theWeather = RetrieveWeather()
+    let lctn = CLLocationManager()
+    @IBAction func weatherFunc(_ sender: Any) {
+        lctn.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled(){
+            lctn.delegate = self
+            lctn.desiredAccuracy = kCLLocationAccuracyKilometer
+            lctn.startUpdatingLocation()
+        }
+    }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            print(location.coordinate)
+            lctn.stopUpdatingLocation()
+            theWeather.getWeather(Latitude: String(location.coordinate.latitude), Longitude: String(location.coordinate.latitude)) { (isSuccess, weatherInfo) in
+                if isSuccess {
+                    print("Success: \(weatherInfo)")
+                }else {
+                    print("Failure: Unable To Get String")
+                }
+            }
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
