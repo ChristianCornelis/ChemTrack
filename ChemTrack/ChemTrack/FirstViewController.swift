@@ -32,7 +32,28 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var numRows = 0
     
     @IBOutlet var theTableView: UITableView!
-    
+    func createDB(){
+        let toCreate = self.chemicalsTable.create { (t) in
+            t.column(self.rowID, primaryKey: true)
+            t.column(self.chemName)
+            t.column(self.chemType)
+            t.column(self.field)
+            t.column(self.fieldSize)
+            t.column(self.date)
+            t.column(self.location)
+            t.column(self.rate)
+            t.column(self.weather)
+            t.column(self.tankSize)
+        }
+        
+        do{
+            try self.db.run(toCreate)
+            print("Created table!")
+        }
+        catch{
+            print(error)
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         let anObj1 = SprayClass(Name: "Spray 1", fieldName: "Birch Street Field", fieldSize: "2 acres", date: "somedate", weather: "24C", tank: 2)
@@ -44,6 +65,15 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         theTableView.delegate = self
         theTableView.dataSource = self
+        do{
+            let docDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let fileName = docDirectory.appendingPathComponent("chemicals").appendingPathExtension("sqlite3")
+            let db = try Connection(fileName.path)
+            self.db = db
+        } catch{
+            print(error)
+        }
+        createDB()
         // Do any additional setup after loading the view, typically from a nib.
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +86,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
 //                print("chemical: \(chemical[self.chemName])")
 //                print("date: \(chemical[self.date])")
             }
+            sprays = sprays.reversed()
             theTableView.reloadData()
         }
         catch{
