@@ -26,6 +26,7 @@ class RetrieveWeather{
             let task = URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
                 if error != nil {
                     print(error!)
+                    completion(false,["noInternet"])
                 } else {
                     if let usable = data {
                         print ("usable data size:\n\(usable)\n")

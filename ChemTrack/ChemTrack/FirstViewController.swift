@@ -75,7 +75,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let db = try Connection(fileName.path)
             self.db = db
             //THIS CLEARS THE DATABASE USE WITH CAUTION
-            try self.db.run(chemicalsTable.drop())
+//            try self.db.run(chemicalsTable.drop())
         } catch{
             print(error)
         }

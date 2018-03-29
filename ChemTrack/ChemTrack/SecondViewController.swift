@@ -149,6 +149,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
         print(chemTypeToAdd)
         let fieldToAdd = fieldInput.text
         var fieldSizeToAdd = Double(fieldSizeInput.text!)
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateToAdd = dateFormatter.string(from: dateInput.date)
@@ -164,7 +165,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
         //checking if some input fields are blank
         if (chemNameToAdd == "" || chemTypeToAdd == "" || fieldToAdd == "" || fieldSizeToAdd == nil || temperature == "")
         {
-            let alert = UIAlertController(title: "Error", message: "Please fill in all fields", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Error", message: "Please fill in all fields correctly", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
                 NSLog("The error alert occured.")}))
             present(alert, animated: true, completion: nil)
@@ -172,14 +173,14 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
         //checking if EVEN MORE input fields are blank
         else if (dateToAdd == "" || locationToAdd == "" || rateToAdd == nil || tankSizeToAdd == nil)
         {
-            let alert = UIAlertController(title: "Error", message: "Please fill in all fields", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Error", message: "Please fill in all fields correctly", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
                 NSLog("The error alert occured.")}))
             present(alert, animated: true, completion: nil)
         }
         //what could this be? YUP YOU GUESSED IT, more input field checking because Swift can't check logical conditions to save its life
         else if (windSpeed == "" || windDirection == nil || humidityToAdd == ""){
-            let alert = UIAlertController(title: "Error", message: "Please fill in all fields", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Error", message: "Please fill in all fields correctly", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
                 NSLog("The error alert occured.")}))
             present(alert, animated: true, completion: nil)
@@ -216,7 +217,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
             if fieldUnits == "acres"{
                 fieldSizeToAdd = fieldSizeToAdd! * 2.47105
             }
-            
+            fieldSizeToAdd = fieldSizeToAdd?.trunc(numDecimalDigits: 2)
             let liquidUsedToAdd:Double = Double(fieldSizeToAdd!) * Double(rateToAdd!)
             let numTanksToAdd:Double = liquidUsedToAdd/Double(tankSizeToAdd!)
             print(fieldUnits)
@@ -264,7 +265,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             print(location.coordinate)
-//            lctn.stopUpdatingLocation()
+            lctn.stopUpdatingLocation()
             theWeather.getWeather(Latitude: String(location.coordinate.latitude), Longitude: String(location.coordinate.longitude)) { (isSuccess, weatherInfo) in
                 if isSuccess {
 //                    print("Success: \(weatherInfo)")
