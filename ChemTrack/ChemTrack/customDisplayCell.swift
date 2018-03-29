@@ -15,8 +15,11 @@ class customDisplayCell: UITableViewCell {
     @IBOutlet var fieldName_lbl: UILabel!
     @IBOutlet var fieldSize_lbl: UILabel!
     @IBOutlet var date_lbl: UILabel!
-    @IBOutlet var weather_lbl: UILabel!
+//    @IBOutlet var weather_lbl: UILabel!
     @IBOutlet var tanks_lbl: UILabel!
+    @IBOutlet var temp_lbl: UILabel!
+    @IBOutlet var windSpeed_lbl: UILabel!
+    @IBOutlet var windDirection_lbl: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

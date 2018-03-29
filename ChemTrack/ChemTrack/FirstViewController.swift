@@ -103,7 +103,15 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cell.fieldName_lbl.text = sprays[indexPath.row].fieldName
         cell.fieldSize_lbl.text = sprays[indexPath.row].fieldSize
         cell.date_lbl.text = sprays[indexPath.row].Date
-        cell.weather_lbl.text = sprays[indexPath.row].weather
+//        cell.weather_lbl.text = sprays[indexPath.row].weather
+        let weatherString:String = sprays[indexPath.row].weather!
+        var weatherInfo = weatherString.split(separator: ",")
+        if weatherInfo.count == 3 {
+            cell.temp_lbl.text = String(weatherInfo[0]) + "C"
+            cell.windSpeed_lbl.text = String(weatherInfo[1]) + " km/h"
+            cell.windDirection_lbl.text = String(weatherInfo[2]) + " deg"
+        }
+        
         cell.tanks_lbl.text = String(sprays[indexPath.row].tank)
         return cell
     }
