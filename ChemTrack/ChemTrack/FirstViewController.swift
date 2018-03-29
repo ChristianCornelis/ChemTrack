@@ -70,6 +70,8 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let fileName = docDirectory.appendingPathComponent("chemicals").appendingPathExtension("sqlite3")
             let db = try Connection(fileName.path)
             self.db = db
+            //THIS CLEARS THE DATABASE USE WITH CAUTION
+            //try self.db.run(chemicalsTable.drop())
         } catch{
             print(error)
         }
@@ -82,7 +84,9 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let chemicals = try self.db.prepare(self.chemicalsTable)
             sprays.removeAll()
             for chemical in chemicals{
+                print(chemical[self.fieldSize])
                 sprays.append(SprayClass(Name: chemical[self.chemName],fieldName: chemical[self.field], fieldSize: String(chemical[self.fieldSize]), date: chemical[self.date], weather: chemical[self.weather], tank: Int(chemical[self.tankSize])))
+                
 //                print("chemical: \(chemical[self.chemName])")
 //                print("date: \(chemical[self.date])")
             }

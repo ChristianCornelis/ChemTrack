@@ -15,6 +15,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
     let areaData:[String] = ["acres", "ha"]
     let rateData:[String] = ["L per", "gals per"]
     let liquidData:[String] = ["L", "gal"]
+    let chemicalTypes:[String] = ["Herbicide", "Fertilizer", "Pesticide", "Fungicide"]
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -27,6 +28,9 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
         else if (pickerView.tag == 3){
             return rateData[row]
         }
+        else if (pickerView.tag == 4){
+            return chemicalTypes[row]
+        }
         else{
             return liquidData[row]
         }
@@ -38,6 +42,9 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
         }
         else if pickerView.tag == 3{
             return rateData.count
+        }
+        else if pickerView.tag == 4{
+            return chemicalTypes.count
         }
         else{
             return liquidData.count
@@ -59,7 +66,6 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 
     //input field declarations
     @IBOutlet weak var chemNameInput: UITextField!
-    @IBOutlet weak var chemTypeInput: UITextField!
     @IBOutlet weak var fieldInput: UITextField!
     @IBOutlet weak var fieldSizeInput: UITextField!
     @IBOutlet weak var dateInput: UIDatePicker!
@@ -75,6 +81,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
     @IBOutlet weak var ratePicker1: UIPickerView!
     @IBOutlet weak var ratePicker2: UIPickerView!
     @IBOutlet weak var tankPicker: UIPickerView!
+    @IBOutlet weak var chemicalTypePicker: UIPickerView!
     
     func clearInputs(){
         tankSizeInput.text = ""
@@ -83,7 +90,6 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
         tempInput.text = ""
         rateInput.text = ""
         chemNameInput.text = ""
-        chemTypeInput.text = ""
         fieldInput.text = ""
         fieldSizeInput.text = ""
         locationInput.text = ""
@@ -118,7 +124,8 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
     //function to retrieve all data from user input and send it in a query to the database if it is complete
     func createChemical(){
         let chemNameToAdd = chemNameInput.text
-        let chemTypeToAdd = chemTypeInput.text
+        let chemTypeToAdd = chemicalTypes[chemicalTypePicker.selectedRow(inComponent: 0)]
+        print(chemTypeToAdd)
         let fieldToAdd = fieldInput.text
         let fieldSizeToAdd = Double(fieldSizeInput.text!)
         let dateFormatter = DateFormatter()
@@ -129,13 +136,14 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
         let rateToAdd = Double(rateInput.text!)
         var weatherToAdd = ""
         let windSpeed = windSpeedInput.text
-        let windDirection = windDirectionInput.text
+        let windDirection = Double(windDirectionInput.text!)
+        print(windDirection)
         let temperature = tempInput.text
         weatherToAdd.append(temperature!)
         weatherToAdd.append(",")
         weatherToAdd.append(windSpeed!)
         weatherToAdd.append(",")
-        weatherToAdd.append(windDirection!)
+        weatherToAdd.append(String(describing: Int(windDirection!)))
         let tankSizeToAdd = Double(tankSizeInput.text!)
         
         if (chemNameToAdd == "" || chemTypeToAdd == "" || fieldToAdd == "" || fieldSizeToAdd == nil || temperature == "")
@@ -152,14 +160,14 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
                 NSLog("The error alert occured.")}))
             present(alert, animated: true, completion: nil)
         }
-        else if (windSpeed == "" || windDirection == ""){
+        else if (windSpeed == "" || windDirection == nil){
             let alert = UIAlertController(title: "Error", message: "Please fill in all fields", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
                 NSLog("The error alert occured.")}))
             present(alert, animated: true, completion: nil)
         }
         else{
-            let insertChemical = self.chemicalsTable.insert(self.chemName <- chemNameToAdd!, self.chemType <- chemTypeToAdd!, self.field <- fieldToAdd!, self.fieldSize <- fieldSizeToAdd!, self.date <- dateToAdd, self.location <- locationToAdd!, self.rate <- rateToAdd!, self.weather <- weatherToAdd, self.tankSize <- tankSizeToAdd!)
+            let insertChemical = self.chemicalsTable.insert(self.chemName <- chemNameToAdd!, self.chemType <- chemTypeToAdd, self.field <- fieldToAdd!, self.fieldSize <- fieldSizeToAdd!, self.date <- dateToAdd, self.location <- locationToAdd!, self.rate <- rateToAdd!, self.weather <- weatherToAdd, self.tankSize <- tankSizeToAdd!)
             
             do{
                 try self.db.run(insertChemical)
@@ -170,6 +178,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
                     print("date: \(chemical[self.date])")
                     print("weather: \(chemical[self.weather])")
                     print("id: \(chemical[self.rowID])")
+                clearInputs()
                 }
             }
             catch{
@@ -218,10 +227,12 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
         ratePicker1.delegate = self
         ratePicker2.delegate = self
         tankPicker.delegate = self
+        chemicalTypePicker.delegate = self
         ratePicker1.dataSource = self
         fieldSizePicker.dataSource = self
         ratePicker2.dataSource = self
         tankPicker.dataSource = self
+        chemicalTypePicker.dataSource = self
         // Do any additional setup after loading the view, typically from a nib.
         do{
             let docDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
