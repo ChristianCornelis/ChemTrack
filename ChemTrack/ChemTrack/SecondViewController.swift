@@ -265,7 +265,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             print(location.coordinate)
-            lctn.stopUpdatingLocation()
+//            lctn.stopUpdatingLocation()
             theWeather.getWeather(Latitude: String(location.coordinate.latitude), Longitude: String(location.coordinate.longitude)) { (isSuccess, weatherInfo) in
                 if isSuccess {
 //                    print("Success: \(weatherInfo)")
