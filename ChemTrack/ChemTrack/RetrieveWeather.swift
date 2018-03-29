@@ -18,6 +18,7 @@ class RetrieveWeather{
         var returnTempMin:String = ""
         var returnWindSpeed:String = ""
         var returnWindDegree:String = ""
+        var returnLocatoin:String = ""
         
         let urlString = URL(string: "\(owmBaseURL)lat=\(Latitude)&lon=\(Longitude)&units=metric&APPID=\(apiKey)")
         
@@ -38,7 +39,8 @@ class RetrieveWeather{
                             returnTempMin = String(describing: thisWeatherData["main"]!["temp_min"]!!)
                             returnWindSpeed = String(describing: thisWeatherData["wind"]!["speed"]!!)
                             returnWindDegree = String(describing: thisWeatherData["wind"]!["deg"]!!)
-                            completion(true,[returnTemp,returnHumidity,returnTempMin,returnWindSpeed,returnWindDegree])
+                            returnLocatoin = String(describing: thisWeatherData["name"]!)
+                            completion(true,[returnTemp,returnHumidity,returnTempMin,returnWindSpeed,returnWindDegree,returnLocatoin])
                            
                         } catch let error_Json as NSError{
                             print("There was a json error \(error_Json.description)")

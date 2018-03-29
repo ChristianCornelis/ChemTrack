@@ -264,7 +264,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
         if let location = locations.first {
             print(location.coordinate)
             lctn.stopUpdatingLocation()
-            theWeather.getWeather(Latitude: String(location.coordinate.latitude), Longitude: String(location.coordinate.latitude)) { (isSuccess, weatherInfo) in
+            theWeather.getWeather(Latitude: String(location.coordinate.latitude), Longitude: String(location.coordinate.longitude)) { (isSuccess, weatherInfo) in
                 if isSuccess {
 //                    print("Success: \(weatherInfo)")
                     DispatchQueue.main.async {
@@ -272,6 +272,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
                         self.humidity.text = weatherInfo[1]
                         self.windSpeedInput.text = weatherInfo[3]
                         self.windDirectionInput.text = weatherInfo[4]
+                        self.locationInput.text = weatherInfo[5]
                     }
                     
                 }else {
