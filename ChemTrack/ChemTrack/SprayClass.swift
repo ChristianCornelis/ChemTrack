@@ -18,8 +18,8 @@ class SprayClass{
     let numTanks: Double?
     let AmtChemUsed: Double?
     let rateOfApp: Double?
-    
-    init(Name:String,fieldName:String,fieldSize:String,date:String,weather:String,tank:Int,numTanks:Double,chemical: String, howMuchChemUsed: Double, applicationRate: Double) {
+    let idOfRow: Int?
+    init(Name:String,fieldName:String,fieldSize:String,date:String,weather:String,tank:Int,numTanks:Double,chemical: String, howMuchChemUsed: Double, applicationRate: Double, rowID: Int) {
         self.Name = Name
         self.fieldName = fieldName
         self.fieldSize = fieldSize
@@ -30,6 +30,7 @@ class SprayClass{
         self.AmtChemUsed = howMuchChemUsed.trunc(numDecimalDigits: 2)
         self.numTanks = numTanks.trunc(numDecimalDigits: 2)
         self.rateOfApp = applicationRate
+        self.idOfRow = rowID
     }
 }
 extension Double

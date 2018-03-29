@@ -18,7 +18,7 @@ struct saveContent {
 class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     var db: Connection!
     let chemicalsTable = Table("chemicals")
-    let rowID = Expression<Int>("rowID")
+    var rowID = Expression<Int>("rowID")
     let chemName = Expression<String>("chemName")
     let chemType = Expression<String>("chemType")
     let field = Expression<String>("field")
@@ -88,7 +88,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let chemicals = try self.db.prepare(self.chemicalsTable)
             sprays.removeAll()
             for chemical in chemicals{
-                sprays.append(SprayClass(Name: chemical[self.chemName],fieldName: chemical[self.field], fieldSize: String(chemical[self.fieldSize]), date: chemical[self.date], weather: chemical[self.weather], tank: Int(chemical[self.tankSize]), numTanks: Double(chemical[self.numTanks]),chemical: chemical[self.chemType], howMuchChemUsed: Double(chemical[self.amountOfProduct]), applicationRate: Double(chemical[self.rate])))
+                sprays.append(SprayClass(Name: chemical[self.chemName],fieldName: chemical[self.field], fieldSize: String(chemical[self.fieldSize]), date: chemical[self.date], weather: chemical[self.weather], tank: Int(chemical[self.tankSize]), numTanks: Double(chemical[self.numTanks]),chemical: chemical[self.chemType], howMuchChemUsed: Double(chemical[self.amountOfProduct]), applicationRate: Double(chemical[self.rate]), rowID: Int(chemical[self.rowID])))
 //                print("chemical: \(chemical[self.chemName])")
 //                print("date: \(chemical[self.date])")
             }
@@ -128,19 +128,33 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 340
     }
-    /*
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+    @IBOutlet var editButton: UIButton!
+    @IBAction func editCell(_ sender: Any) {
+        theTableView.isEditing = !theTableView.isEditing
+        if theTableView.isEditing {
+            editButton.setTitle("Done", for: .normal)
+        } else {
+            editButton.setTitle("Edit", for: .normal)
+        }
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let toDel = chemicalsTable.filter(rowID == sprays[indexPath.row].idOfRow!)
+            do {
+                try self.db.run(toDel.delete())
+            }catch{
+                print(error)
+            }
+            /*let thisDelete = toDel.delete()
+            if let changes = thisDelete.changes where changes > 0 {
+                print("removed \(changes) record(s) for Alice")
+            } else if delete.statement.failed {
+                print("delete failed: \(delete.statement.reason)")
+            }*/
+//            theTableView.reloadData()
+        }
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle == .delete){
-            
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            tableView.
-            let toDel = chemicalsTable.filter(rowID = )
-        }
-    }*/
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
