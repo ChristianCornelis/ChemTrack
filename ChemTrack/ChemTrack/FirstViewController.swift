@@ -142,6 +142,15 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let toDel = chemicalsTable.filter(rowID == sprays[indexPath.row].idOfRow!)
             do {
                 try self.db.run(toDel.delete())
+                let chemicals = try self.db.prepare(self.chemicalsTable)
+                sprays.removeAll()
+                for chemical in chemicals{
+                    sprays.append(SprayClass(Name: chemical[self.chemName],fieldName: chemical[self.field], fieldSize: String(chemical[self.fieldSize]), date: chemical[self.date], weather: chemical[self.weather], tank: Int(chemical[self.tankSize]), numTanks: Double(chemical[self.numTanks]),chemical: chemical[self.chemType], howMuchChemUsed: Double(chemical[self.amountOfProduct]), applicationRate: Double(chemical[self.rate]), rowID: Int(chemical[self.rowID])))
+                    //                print("chemical: \(chemical[self.chemName])")
+                    //                print("date: \(chemical[self.date])")
+                }
+                sprays = sprays.reversed()
+                theTableView.reloadData()
             }catch{
                 print(error)
             }
