@@ -75,7 +75,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let db = try Connection(fileName.path)
             self.db = db
             //THIS CLEARS THE DATABASE USE WITH CAUTION
-//            try self.db.run(chemicalsTable.drop())
+            //try self.db.run(chemicalsTable.drop())
         } catch{
             print(error)
         }
@@ -128,6 +128,19 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 340
     }
+    /*
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete){
+            
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.
+            let toDel = chemicalsTable.filter(rowID = )
+        }
+    }*/
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

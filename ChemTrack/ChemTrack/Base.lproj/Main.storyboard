@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--First-->
+        <!--All Chemicals-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
                 <viewController id="9pv-A4-QxB" customClass="FirstViewController" customModule="ChemTrack" customModuleProvider="target" sceneMemberID="viewController">
@@ -333,7 +333,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
+                    <tabBarItem key="tabBarItem" title="All Chemicals" image="list" id="acW-dT-cKf"/>
                     <connections>
                         <outlet property="theTableView" destination="TVc-xA-inU" id="8nq-jn-cOl"/>
                     </connections>
@@ -342,7 +342,7 @@
             </objects>
             <point key="canvasLocation" x="748" y="-321.58920539730138"/>
         </scene>
-        <!--Item-->
+        <!--New Chemical-->
         <scene sceneID="eZL-31-qo8">
             <objects>
                 <viewController id="jMa-Cm-Dpb" customClass="SecondViewController" customModule="ChemTrack" customModuleProvider="target" sceneMemberID="viewController">
@@ -610,7 +610,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bYq-Uo-fpl"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="69y-0S-Wf3"/>
+                    <tabBarItem key="tabBarItem" title="New Chemical" image="new" id="69y-0S-Wf3"/>
                     <size key="freeformSize" width="375" height="1250"/>
                     <connections>
                         <outlet property="chemNameInput" destination="UKJ-w5-gR01" id="IbI-Wd-IjE"/>
@@ -663,6 +663,7 @@
         <image name="Reset" width="51" height="16"/>
         <image name="Save" width="44" height="16"/>
         <image name="Status bar" width="375" height="23"/>
-        <image name="first" width="30" height="30"/>
+        <image name="list" width="30" height="30"/>
+        <image name="new" width="30" height="30"/>
     </resources>
 </document>
