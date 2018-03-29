@@ -7,20 +7,29 @@
 //
 
 import UIKit
-
+import SQLite
 struct saveContent {
     let windSpeed: Double?
     let windDirection: Int?
-    let dailyMax: Double?
-    let dailyMin: Double?
     let temp: Double?
     let description: String?
 }
 
 class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
-
+    var db: Connection!
+    let chemicalsTable = Table("chemicals")
+    let rowID = Expression<Int>("rowID")
+    let chemName = Expression<String>("chemName")
+    let chemType = Expression<String>("chemType")
+    let field = Expression<String>("field")
+    let fieldSize = Expression<Double>("fieldSize")
+    let date = Expression<String>("date")
+    let location = Expression<String>("location")
+    let rate = Expression<Double>("rate")
+    let weather = Expression<String>("weather")
+    let tankSize = Expression<Double>("tankSize")
     var sprays = [SprayClass]()
-    
+    var numRows = 0
     
     @IBOutlet var theTableView: UITableView!
     
@@ -37,6 +46,22 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         theTableView.dataSource = self
         // Do any additional setup after loading the view, typically from a nib.
     }
+    override func viewWillAppear(_ animated: Bool) {
+        print("now looking at data")
+        do{
+            let chemicals = try self.db.prepare(self.chemicalsTable)
+            sprays.removeAll()
+            for chemical in chemicals{
+                sprays.append(SprayClass(Name: chemical[self.chemName],fieldName: chemical[self.field], fieldSize: String(chemical[self.fieldSize]), date: chemical[self.date], weather: chemical[self.weather], tank: Int(chemical[self.tankSize])))
+//                print("chemical: \(chemical[self.chemName])")
+//                print("date: \(chemical[self.date])")
+            }
+            theTableView.reloadData()
+        }
+        catch{
+            print(error)
+        }
+    }
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sprays.count
     }
@@ -52,12 +77,13 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 145
+        return 200
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        print ("hello world")
+        
+        
         // Dispose of any resources that can be recreated.
         //hello from christian
     }

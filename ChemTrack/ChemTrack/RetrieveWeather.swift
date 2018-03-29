@@ -19,7 +19,7 @@ class RetrieveWeather{
         var returnWindSpeed:String = ""
         var returnWindDegree:String = ""
         
-        let urlString = URL(string: "\(owmBaseURL)lat=\(Latitude)&lon=\(Longitude)&APPID=\(apiKey)")
+        let urlString = URL(string: "\(owmBaseURL)lat=\(Latitude)&lon=\(Longitude)&units=metric&APPID=\(apiKey)")
         
         if let url = urlString{
             let task = URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
