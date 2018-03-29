@@ -75,7 +75,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let db = try Connection(fileName.path)
             self.db = db
             //THIS CLEARS THE DATABASE USE WITH CAUTION
-            //try self.db.run(chemicalsTable.drop())
+            try self.db.run(chemicalsTable.drop())
         } catch{
             print(error)
         }
@@ -116,10 +116,11 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
 //        cell.weather_lbl.text = sprays[indexPath.row].weather
         let weatherString:String = sprays[indexPath.row].weather!
         var weatherInfo = weatherString.split(separator: ",")
-        if weatherInfo.count == 3 {
+        if weatherInfo.count == 4 {
             cell.temp_lbl.text = String(weatherInfo[0])
             cell.windSpeed_lbl.text = String(weatherInfo[1])
             cell.windDirection_lbl.text = String(weatherInfo[2])
+            cell.humidityLevel_lbl.text = String(weatherInfo[3])
         }
         
         cell.tankSize_lbl.text = String(sprays[indexPath.row].tankSize)
@@ -128,15 +129,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 340
     }
-    @IBOutlet var editButton: UIButton!
-    @IBAction func editCell(_ sender: Any) {
-        theTableView.isEditing = !theTableView.isEditing
-        if theTableView.isEditing {
-            editButton.setTitle("Done", for: .normal)
-        } else {
-            editButton.setTitle("Edit", for: .normal)
-        }
-    }
+
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let toDel = chemicalsTable.filter(rowID == sprays[indexPath.row].idOfRow!)

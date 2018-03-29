@@ -105,6 +105,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
         humidityInput.text = ""
     }
     @IBAction func saveChemical(_ sender: UIButton) {
+        self.view.endEditing(true)
         createChemical()
         /*let storyBoard: UIStoryboard = UIStoryboard(name: "First", bundle: nil)
         let nextViewCtrl = storyBoard.instantiateViewController(withIdentifier: "First")
@@ -314,7 +315,9 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
         //TODO: Add layout.
         //need to import from Sketch.
     }
-
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 
 }
 
