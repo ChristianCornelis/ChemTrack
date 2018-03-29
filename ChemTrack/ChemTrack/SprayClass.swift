@@ -14,13 +14,15 @@ class SprayClass{
     let Date: String?
     let weather: String?
     let tank: Int
+    let chemType: String?
     
-    init(Name:String,fieldName:String,fieldSize:String,date:String,weather:String,tank:Int) {
+    init(Name:String,fieldName:String,fieldSize:String,date:String,weather:String,tank:Int,chemical: String) {
         self.Name = Name
         self.fieldName = fieldName
         self.fieldSize = fieldSize
         self.Date = date
         self.weather = weather
         self.tank = tank
+        self.chemType = chemical
     }
 }

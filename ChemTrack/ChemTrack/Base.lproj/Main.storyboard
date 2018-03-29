@@ -29,7 +29,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gsg-gz-SeE">
-                                                    <rect key="frame" x="10" y="5" width="355" height="378"/>
+                                                    <rect key="frame" x="10" y="8" width="355" height="372"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F6U-Jp-FgN">
                                                             <rect key="frame" x="8" y="8" width="48" height="21"/>
@@ -55,8 +55,8 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tanks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H8v-JY-Q8t">
-                                                            <rect key="frame" x="8" y="92" width="48" height="21"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Chemical Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H8v-JY-Q8t">
+                                                            <rect key="frame" x="8" y="92" width="121" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                             <nil key="textColor"/>
@@ -87,7 +87,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PFD-hD-jrO">
-                                                            <rect key="frame" x="171" y="92" width="42" height="21"/>
+                                                            <rect key="frame" x="171" y="92" width="135" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
@@ -101,7 +101,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="beT-xN-UZI">
-                                                            <rect key="frame" x="171" y="113" width="42" height="21"/>
+                                                            <rect key="frame" x="171" y="113" width="135" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
@@ -115,7 +115,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZCF-DA-NTL">
-                                                            <rect key="frame" x="171" y="134" width="42" height="21"/>
+                                                            <rect key="frame" x="171" y="134" width="135" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
@@ -216,12 +216,13 @@
                                             <constraints>
                                                 <constraint firstItem="gsg-gz-SeE" firstAttribute="leading" secondItem="whX-Iv-iJo" secondAttribute="leading" constant="10" id="YXO-uT-9zI"/>
                                                 <constraint firstAttribute="trailing" secondItem="gsg-gz-SeE" secondAttribute="trailing" constant="10" id="f0L-05-waN"/>
-                                                <constraint firstItem="gsg-gz-SeE" firstAttribute="top" secondItem="whX-Iv-iJo" secondAttribute="top" constant="5" id="ob5-Rz-x3g"/>
-                                                <constraint firstAttribute="bottom" secondItem="gsg-gz-SeE" secondAttribute="bottom" constant="5" id="x2X-Xq-wBK"/>
+                                                <constraint firstItem="gsg-gz-SeE" firstAttribute="top" secondItem="whX-Iv-iJo" secondAttribute="top" constant="8" id="ob5-Rz-x3g"/>
+                                                <constraint firstAttribute="bottom" secondItem="gsg-gz-SeE" secondAttribute="bottom" constant="8" id="x2X-Xq-wBK"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="cellView" destination="gsg-gz-SeE" id="KVZ-fb-kUu"/>
+                                            <outlet property="chemicalType_lbl" destination="PFD-hD-jrO" id="Xah-Mq-y4K"/>
                                             <outlet property="date_lbl" destination="Y9A-1F-S99" id="Tfg-fb-QaG"/>
                                             <outlet property="fieldName_lbl" destination="Tbc-zX-u5c" id="XUn-ks-Pyx"/>
                                             <outlet property="fieldSize_lbl" destination="20i-ju-hCG" id="Oif-pw-dqt"/>
@@ -246,16 +247,6 @@
                                     <constraint firstAttribute="height" constant="57" id="18k-18-n89"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TEr-TG-VLZ">
-                                <rect key="frame" x="279" y="40" width="80" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="getWeather">
-                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="weatherFunc:" destination="9pv-A4-QxB" eventType="touchUpInside" id="j53-cA-azg"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>

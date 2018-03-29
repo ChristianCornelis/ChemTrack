@@ -56,12 +56,12 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        let anObj1 = SprayClass(Name: "Spray 1", fieldName: "Birch Street Field", fieldSize: "2 acres", date: "somedate", weather: "24C", tank: 2)
-        let anObj2 = SprayClass(Name: "Spray 2", fieldName: "Birch Street Field", fieldSize: "2 acres", date: "somedate", weather: "24C", tank: 2)
+//        let anObj1 = SprayClass(Name: "Spray 1", fieldName: "Birch Street Field", fieldSize: "2 acres", date: "somedate", weather: "24C", tank: 2)
+//        let anObj2 = SprayClass(Name: "Spray 2", fieldName: "Birch Street Field", fieldSize: "2 acres", date: "somedate", weather: "24C", tank: 2)
         
         
-        sprays.append(anObj1)
-        sprays.append(anObj2)
+//        sprays.append(anObj1)
+//        sprays.append(anObj2)
         
         theTableView.delegate = self
         theTableView.dataSource = self
@@ -82,7 +82,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let chemicals = try self.db.prepare(self.chemicalsTable)
             sprays.removeAll()
             for chemical in chemicals{
-                sprays.append(SprayClass(Name: chemical[self.chemName],fieldName: chemical[self.field], fieldSize: String(chemical[self.fieldSize]), date: chemical[self.date], weather: chemical[self.weather], tank: Int(chemical[self.tankSize])))
+                sprays.append(SprayClass(Name: chemical[self.chemName],fieldName: chemical[self.field], fieldSize: String(chemical[self.fieldSize]), date: chemical[self.date], weather: chemical[self.weather], tank: Int(chemical[self.tankSize]),chemical: chemical[self.chemType]))
 //                print("chemical: \(chemical[self.chemName])")
 //                print("date: \(chemical[self.date])")
             }
@@ -103,6 +103,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cell.fieldName_lbl.text = sprays[indexPath.row].fieldName
         cell.fieldSize_lbl.text = sprays[indexPath.row].fieldSize
         cell.date_lbl.text = sprays[indexPath.row].Date
+        cell.chemicalType_lbl.text = sprays[indexPath.row].chemType
 //        cell.weather_lbl.text = sprays[indexPath.row].weather
         let weatherString:String = sprays[indexPath.row].weather!
         var weatherInfo = weatherString.split(separator: ",")
@@ -116,7 +117,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 250
+        return 275
     }
     
     override func didReceiveMemoryWarning() {
