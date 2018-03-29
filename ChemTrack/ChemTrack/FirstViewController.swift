@@ -75,7 +75,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let db = try Connection(fileName.path)
             self.db = db
             //THIS CLEARS THE DATABASE USE WITH CAUTION
-            //try self.db.run(chemicalsTable.drop())
+//            try self.db.run(chemicalsTable.drop())
         } catch{
             print(error)
         }
@@ -88,7 +88,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let chemicals = try self.db.prepare(self.chemicalsTable)
             sprays.removeAll()
             for chemical in chemicals{
-                sprays.append(SprayClass(Name: chemical[self.chemName],fieldName: chemical[self.field], fieldSize: String(chemical[self.fieldSize]), date: chemical[self.date], weather: chemical[self.weather], tank: Int(chemical[self.tankSize]),chemical: chemical[self.chemType]))
+                sprays.append(SprayClass(Name: chemical[self.chemName],fieldName: chemical[self.field], fieldSize: String(chemical[self.fieldSize]), date: chemical[self.date], weather: chemical[self.weather], tank: Int(chemical[self.tankSize]), numTanks: Double(chemical[self.numTanks]),chemical: chemical[self.chemType], howMuchChemUsed: Double(chemical[self.amountOfProduct]), applicationRate: Double(chemical[self.rate])))
 //                print("chemical: \(chemical[self.chemName])")
 //                print("date: \(chemical[self.date])")
             }
@@ -110,6 +110,9 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cell.fieldSize_lbl.text = sprays[indexPath.row].fieldSize
         cell.date_lbl.text = sprays[indexPath.row].Date
         cell.chemicalType_lbl.text = sprays[indexPath.row].chemType
+        cell.AmtChemicalUsed_lbl.text = String(describing: sprays[indexPath.row].AmtChemUsed!)
+        cell.rateOfApplication_lbl.text = String(describing: sprays[indexPath.row].rateOfApp!)
+        cell.numTanks_lbl.text = String(describing: sprays[indexPath.row].numTanks!)
 //        cell.weather_lbl.text = sprays[indexPath.row].weather
         let weatherString:String = sprays[indexPath.row].weather!
         var weatherInfo = weatherString.split(separator: ",")
@@ -119,11 +122,11 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.windDirection_lbl.text = String(weatherInfo[2])
         }
         
-        cell.tankSize_lbl.text = String(sprays[indexPath.row].tank)
+        cell.tankSize_lbl.text = String(sprays[indexPath.row].tankSize)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
+        return 340
     }
     
     override func didReceiveMemoryWarning() {

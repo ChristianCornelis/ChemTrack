@@ -13,16 +13,29 @@ class SprayClass{
     let fieldSize: String?
     let Date: String?
     let weather: String?
-    let tank: Int
+    let tankSize: Int
     let chemType: String?
+    let numTanks: Double?
+    let AmtChemUsed: Double?
+    let rateOfApp: Double?
     
-    init(Name:String,fieldName:String,fieldSize:String,date:String,weather:String,tank:Int,chemical: String) {
+    init(Name:String,fieldName:String,fieldSize:String,date:String,weather:String,tank:Int,numTanks:Double,chemical: String, howMuchChemUsed: Double, applicationRate: Double) {
         self.Name = Name
         self.fieldName = fieldName
         self.fieldSize = fieldSize
         self.Date = date
         self.weather = weather
-        self.tank = tank
+        self.tankSize = tank
         self.chemType = chemical
+        self.AmtChemUsed = howMuchChemUsed.trunc(numDecimalDigits: 2)
+        self.numTanks = numTanks.trunc(numDecimalDigits: 2)
+        self.rateOfApp = applicationRate
+    }
+}
+extension Double
+{
+    func trunc(numDecimalDigits : Int)-> Double
+    {
+        return Double(floor(pow(10.0, Double(numDecimalDigits)) * self)/pow(10.0, Double(numDecimalDigits)))
     }
 }
