@@ -70,6 +70,8 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let fileName = docDirectory.appendingPathComponent("chemicals").appendingPathExtension("sqlite3")
             let db = try Connection(fileName.path)
             self.db = db
+            //THIS CLEARS THE DATABASE USE WITH CAUTION
+            //try self.db.run(chemicalsTable.drop())
         } catch{
             print(error)
         }
