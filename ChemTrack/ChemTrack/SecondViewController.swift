@@ -226,8 +226,10 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
                     print("type: \(chemical[self.chemType])")
                     print("numTanks: \(chemical[self.numTanks])")
                     print("productUsed: \(chemical[self.amountOfProduct])")
-                clearInputs()
+                
                 }
+                clearInputs()
+//                self.navigationController?.pushViewController(FirstViewController, animated: true)
             }
             catch{
                 print(error)

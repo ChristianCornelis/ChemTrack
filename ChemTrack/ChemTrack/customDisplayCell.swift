@@ -16,13 +16,16 @@ class customDisplayCell: UITableViewCell {
     @IBOutlet var fieldSize_lbl: UILabel!
     @IBOutlet var date_lbl: UILabel!
 //    @IBOutlet var weather_lbl: UILabel!
+    @IBOutlet var chemicalType_lbl: UILabel!
+    @IBOutlet var AmtChemicalUsed_lbl: UILabel!
+    @IBOutlet var rateOfApplication_lbl: UILabel!
     @IBOutlet var numTanks_lbl: UILabel!
     @IBOutlet var tankSize_lbl: UILabel!
     @IBOutlet var temp_lbl: UILabel!
     @IBOutlet var windSpeed_lbl: UILabel!
     @IBOutlet var windDirection_lbl: UILabel!
-    @IBOutlet var chemicalType_lbl: UILabel!
-    @IBOutlet var AmtChemicalUsed: UILabel!
+    @IBOutlet var humidityLevel_lbl: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
