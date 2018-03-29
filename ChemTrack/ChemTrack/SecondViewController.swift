@@ -72,8 +72,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
     @IBOutlet weak var locationInput: UITextField!
     @IBOutlet weak var rateInput: UITextField!
     @IBOutlet weak var tankSizeInput: UITextField!
-    @IBOutlet var dailyHighInput: UITextField!
-    @IBOutlet var dailyLowInput: UITextField!
+    @IBOutlet var humidity: UITextField!
     @IBOutlet weak var windDirectionInput: UITextField!
     @IBOutlet weak var windSpeedInput: UITextField!
     @IBOutlet weak var tempInput: UITextField!
@@ -137,7 +136,6 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
         var weatherToAdd = ""
         let windSpeed = windSpeedInput.text
         let windDirection = Double(windDirectionInput.text!)
-        print(windDirection)
         let temperature = tempInput.text
         weatherToAdd.append(temperature!)
         weatherToAdd.append(",")
@@ -207,8 +205,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 //                    print("Success: \(weatherInfo)")
                     DispatchQueue.main.async {
                         self.tempInput.text = weatherInfo[0]
-                        self.dailyHighInput.text = weatherInfo[1]
-                        self.dailyLowInput.text = weatherInfo[2]
+                        self.humidity.text = weatherInfo[1]
                         self.windSpeedInput.text = weatherInfo[3]
                         self.windDirectionInput.text = weatherInfo[4]
                     }

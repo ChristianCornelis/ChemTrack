@@ -110,16 +110,16 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let weatherString:String = sprays[indexPath.row].weather!
         var weatherInfo = weatherString.split(separator: ",")
         if weatherInfo.count == 3 {
-            cell.temp_lbl.text = String(weatherInfo[0]) + "C"
-            cell.windSpeed_lbl.text = String(weatherInfo[1]) + " km/h"
-            cell.windDirection_lbl.text = String(weatherInfo[2]) + " deg"
+            cell.temp_lbl.text = String(weatherInfo[0])
+            cell.windSpeed_lbl.text = String(weatherInfo[1])
+            cell.windDirection_lbl.text = String(weatherInfo[2])
         }
         
-        cell.tanks_lbl.text = String(sprays[indexPath.row].tank)
+        cell.tankSize_lbl.text = String(sprays[indexPath.row].tank)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 275
+        return 300
     }
     
     override func didReceiveMemoryWarning() {

@@ -14,7 +14,7 @@ class RetrieveWeather{
     
     func getWeather(Latitude: String,Longitude: String, completion: @escaping successfulyGotWeather){
         var returnTemp:String = ""
-        var returnTempMax:String = ""
+        var returnHumidity:String = ""
         var returnTempMin:String = ""
         var returnWindSpeed:String = ""
         var returnWindDegree:String = ""
@@ -34,15 +34,15 @@ class RetrieveWeather{
                             
                             print(thisWeatherData)
                             returnTemp = String(describing: thisWeatherData["main"]!["temp"]!!)
-                            returnTempMax = String(describing: thisWeatherData["main"]!["temp_max"]!!)
+                            returnHumidity = String(describing: thisWeatherData["main"]!["humidity"]!!)
                             returnTempMin = String(describing: thisWeatherData["main"]!["temp_min"]!!)
                             returnWindSpeed = String(describing: thisWeatherData["wind"]!["speed"]!!)
                             returnWindDegree = String(describing: thisWeatherData["wind"]!["deg"]!!)
-                            completion(true,[returnTemp,returnTempMax,returnTempMin,returnWindSpeed,returnWindDegree])
+                            completion(true,[returnTemp,returnHumidity,returnTempMin,returnWindSpeed,returnWindDegree])
                            
                         } catch let error_Json as NSError{
                             print("There was a json error \(error_Json.description)")
-                            completion(false,[returnTemp,returnTempMax,returnTempMin,returnWindSpeed,returnWindDegree])
+                            completion(false,[returnTemp,returnHumidity,returnTempMin,returnWindSpeed,returnWindDegree])
                         }
                     }
                 }
