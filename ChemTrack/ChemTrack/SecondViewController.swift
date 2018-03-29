@@ -16,6 +16,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
     let rateData:[String] = ["L per", "gals per"]
     let liquidData:[String] = ["L", "gal"]
     let chemicalTypes:[String] = ["Herbicide", "Fertilizer", "Pesticide", "Fungicide"]
+    let areaData2:[String] = ["acre", "ha"]
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -31,6 +32,9 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
         else if (pickerView.tag == 4){
             return chemicalTypes[row]
         }
+        else if (pickerView.tag == 5){
+            return areaData2[row]
+        }
         else{
             return liquidData[row]
         }
@@ -45,6 +49,9 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
         }
         else if pickerView.tag == 4{
             return chemicalTypes.count
+        }
+        else if (pickerView.tag == 5){
+            return areaData2.count
         }
         else{
             return liquidData.count
@@ -63,6 +70,8 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
     let rate = Expression<Double>("rate")
     let weather = Expression<String>("weather")
     let tankSize = Expression<Double>("tankSize")
+    let numTanks = Expression<Double>("numTanks")
+    let amountOfProduct = Expression<Double>("amountOfProduct")
 
     //input field declarations
     @IBOutlet weak var chemNameInput: UITextField!
@@ -109,6 +118,8 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
             t.column(self.rate)
             t.column(self.weather)
             t.column(self.tankSize)
+            t.column(self.numTanks)
+            t.column(self.amountOfProduct)
         }
         
         do{
@@ -126,24 +137,20 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
         let chemTypeToAdd = chemicalTypes[chemicalTypePicker.selectedRow(inComponent: 0)]
         print(chemTypeToAdd)
         let fieldToAdd = fieldInput.text
-        let fieldSizeToAdd = Double(fieldSizeInput.text!)
+        var fieldSizeToAdd = Double(fieldSizeInput.text!)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateToAdd = dateFormatter.string(from: dateInput.date)
         print(date)
         let locationToAdd = locationInput.text
-        let rateToAdd = Double(rateInput.text!)
+        var rateToAdd = Double(rateInput.text!)
         var weatherToAdd = ""
         let windSpeed = windSpeedInput.text
         let windDirection = Double(windDirectionInput.text!)
         let temperature = tempInput.text
-        weatherToAdd.append(temperature!)
-        weatherToAdd.append(",")
-        weatherToAdd.append(windSpeed!)
-        weatherToAdd.append(",")
-        weatherToAdd.append(String(describing: Int(windDirection!)))
-        let tankSizeToAdd = Double(tankSizeInput.text!)
+        var tankSizeToAdd = Double(tankSizeInput.text!)
         
+        //checking if some input fields are blank
         if (chemNameToAdd == "" || chemTypeToAdd == "" || fieldToAdd == "" || fieldSizeToAdd == nil || temperature == "")
         {
             let alert = UIAlertController(title: "Error", message: "Please fill in all fields", preferredStyle: .alert)
@@ -151,21 +158,61 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
                 NSLog("The error alert occured.")}))
             present(alert, animated: true, completion: nil)
         }
-        else if (dateToAdd == "" || locationToAdd == "" || rateToAdd == nil || weatherToAdd == "" || tankSizeToAdd == nil)
+        //checking if EVEN MORE input fields are blank
+        else if (dateToAdd == "" || locationToAdd == "" || rateToAdd == nil || tankSizeToAdd == nil)
         {
             let alert = UIAlertController(title: "Error", message: "Please fill in all fields", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
                 NSLog("The error alert occured.")}))
             present(alert, animated: true, completion: nil)
         }
+        //what could this be? YUP YOU GUESSED IT, more input field checking because Swift can't check logical conditions to save its life
         else if (windSpeed == "" || windDirection == nil){
             let alert = UIAlertController(title: "Error", message: "Please fill in all fields", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
                 NSLog("The error alert occured.")}))
             present(alert, animated: true, completion: nil)
         }
+        //if all input fields are filled
         else{
-            let insertChemical = self.chemicalsTable.insert(self.chemName <- chemNameToAdd!, self.chemType <- chemTypeToAdd, self.field <- fieldToAdd!, self.fieldSize <- fieldSizeToAdd!, self.date <- dateToAdd, self.location <- locationToAdd!, self.rate <- rateToAdd!, self.weather <- weatherToAdd, self.tankSize <- tankSizeToAdd!)
+            weatherToAdd.append(temperature!)
+            weatherToAdd.append(",")
+            weatherToAdd.append(windSpeed!)
+            weatherToAdd.append(",")
+            weatherToAdd.append(String(describing: Int(windDirection!)))
+            
+            let fieldUnits = areaData[fieldSizePicker.selectedRow(inComponent: 0)]
+            let rateAreaUnits = areaData[ratePicker2.selectedRow(inComponent: 0)]
+            let rateLiquidUnits = liquidData[ratePicker1.selectedRow(inComponent: 0)]
+            let tankUnits = liquidData[tankPicker.selectedRow(inComponent: 0)]
+            
+            if tankUnits == "gal"{
+                tankSizeToAdd = tankSizeToAdd! * 3.78541
+            }
+            
+            if (rateLiquidUnits == "gals per" && rateAreaUnits == "acre"){
+                rateToAdd = rateToAdd! * 9.35396
+            }
+            else if (rateLiquidUnits == "L per" && rateAreaUnits == "acre"){
+                rateToAdd = rateToAdd! * 2.47105381
+            }
+            else if (rateLiquidUnits == "gals per" && rateAreaUnits == "ha"){
+                rateToAdd = rateToAdd! * 3.78541178
+            }
+            
+            if fieldUnits == "acres"{
+                fieldSizeToAdd = fieldSizeToAdd! * 2.47105
+            }
+            
+            let liquidUsedToAdd:Double = Double(fieldSizeToAdd!) * Double(rateToAdd!)
+            let numTanksToAdd:Double = liquidUsedToAdd/Double(tankSizeToAdd!)
+            print(fieldUnits)
+            print(rateAreaUnits)
+            print(rateLiquidUnits)
+            print(tankUnits)
+            
+            
+            let insertChemical = self.chemicalsTable.insert(self.chemName <- chemNameToAdd!, self.chemType <- chemTypeToAdd, self.field <- fieldToAdd!, self.fieldSize <- fieldSizeToAdd!, self.date <- dateToAdd, self.location <- locationToAdd!, self.rate <- rateToAdd!, self.weather <- weatherToAdd, self.tankSize <- tankSizeToAdd!, self.numTanks <- numTanksToAdd, self.amountOfProduct <- liquidUsedToAdd)
             
             do{
                 try self.db.run(insertChemical)
@@ -176,6 +223,9 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
                     print("date: \(chemical[self.date])")
                     print("weather: \(chemical[self.weather])")
                     print("id: \(chemical[self.rowID])")
+                    print("type: \(chemical[self.chemType])")
+                    print("numTanks: \(chemical[self.numTanks])")
+                    print("productUsed: \(chemical[self.amountOfProduct])")
                 clearInputs()
                 }
             }

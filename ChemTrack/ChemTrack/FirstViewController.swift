@@ -28,6 +28,8 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     let rate = Expression<Double>("rate")
     let weather = Expression<String>("weather")
     let tankSize = Expression<Double>("tankSize")
+    let numTanks = Expression<Double>("numTanks")
+    let amountOfProduct = Expression<Double>("amountOfProduct")
     var sprays = [SprayClass]()
     var numRows = 0
     
@@ -44,6 +46,8 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             t.column(self.rate)
             t.column(self.weather)
             t.column(self.tankSize)
+            t.column(self.numTanks)
+            t.column(self.amountOfProduct)
         }
         
         do{
@@ -71,7 +75,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let db = try Connection(fileName.path)
             self.db = db
             //THIS CLEARS THE DATABASE USE WITH CAUTION
-            //try self.db.run(chemicalsTable.drop())
+            try self.db.run(chemicalsTable.drop())
         } catch{
             print(error)
         }
