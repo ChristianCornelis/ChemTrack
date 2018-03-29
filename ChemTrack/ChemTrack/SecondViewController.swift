@@ -10,7 +10,40 @@ import UIKit
 import SQLite
 import CoreLocation
 
-class SecondViewController: UIViewController, CLLocationManagerDelegate {
+class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+    
+    let areaData:[String] = ["acres", "ha"]
+    let rateData:[String] = ["L per", "gals per"]
+    let liquidData:[String] = ["L", "gal"]
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if (pickerView.tag == 1){
+            return areaData[row]
+        }
+        else if (pickerView.tag == 3){
+            return rateData[row]
+        }
+        else{
+            return liquidData[row]
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView.tag == 1{
+            return areaData.count
+        }
+        else if pickerView.tag == 3{
+            return rateData.count
+        }
+        else{
+            return liquidData.count
+        }
+    }
+    
     var db: Connection!
     let chemicalsTable = Table("chemicals")
     let rowID = Expression<Int>("rowID")
@@ -32,16 +65,30 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var dateInput: UIDatePicker!
     @IBOutlet weak var locationInput: UITextField!
     @IBOutlet weak var rateInput: UITextField!
-    @IBOutlet weak var weatherInput: UITextField!
     @IBOutlet weak var tankSizeInput: UITextField!
-    @IBOutlet var tempInput: UITextField!
     @IBOutlet var dailyHighInput: UITextField!
     @IBOutlet var dailyLowInput: UITextField!
-    @IBOutlet var windSpeedInput: UITextField!
-    @IBOutlet var windDirectionInput: UITextField!
+    @IBOutlet weak var windDirectionInput: UITextField!
+    @IBOutlet weak var windSpeedInput: UITextField!
+    @IBOutlet weak var tempInput: UITextField!
+    @IBOutlet weak var fieldSizePicker: UIPickerView!
+    @IBOutlet weak var ratePicker1: UIPickerView!
+    @IBOutlet weak var ratePicker2: UIPickerView!
+    @IBOutlet weak var tankPicker: UIPickerView!
     
+    func clearInputs(){
+        tankSizeInput.text = ""
+        windDirectionInput.text = ""
+        windSpeedInput.text = ""
+        tempInput.text = ""
+        rateInput.text = ""
+        chemNameInput.text = ""
+        chemTypeInput.text = ""
+        fieldInput.text = ""
+        fieldSizeInput.text = ""
+        locationInput.text = ""
+    }
     @IBAction func saveChemical(_ sender: UIButton) {
-        print(chemNameInput.text!)
         createChemical()
     }
     
@@ -68,6 +115,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    //function to retrieve all data from user input and send it in a query to the database if it is complete
     func createChemical(){
         let chemNameToAdd = chemNameInput.text
         let chemTypeToAdd = chemTypeInput.text
@@ -79,28 +127,39 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate {
         print(date)
         let locationToAdd = locationInput.text
         let rateToAdd = Double(rateInput.text!)
-        let weatherToAdd = weatherInput.text
+        var weatherToAdd = ""
+        let windSpeed = windSpeedInput.text
+        let windDirection = windDirectionInput.text
+        let temperature = tempInput.text
+        weatherToAdd.append(temperature!)
+        weatherToAdd.append(",")
+        weatherToAdd.append(windSpeed!)
+        weatherToAdd.append(",")
+        weatherToAdd.append(windDirection!)
         let tankSizeToAdd = Double(tankSizeInput.text!)
         
-//        print(chemNameToAdd)
-//        print(chemTypeToAdd)
-//        print(fieldToAdd)
-        if (chemNameToAdd == "" || chemTypeToAdd == "" || fieldToAdd == "" || fieldSizeToAdd == nil)
+        if (chemNameToAdd == "" || chemTypeToAdd == "" || fieldToAdd == "" || fieldSizeToAdd == nil || temperature == "")
         {
-            let alert = UIAlertController(title: "ErrorHandle", message: "Please fill in all fields", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Error", message: "Please fill in all fields", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
-                NSLog("The \"OK\" alert occured.")}))
+                NSLog("The error alert occured.")}))
             present(alert, animated: true, completion: nil)
         }
         else if (dateToAdd == "" || locationToAdd == "" || rateToAdd == nil || weatherToAdd == "" || tankSizeToAdd == nil)
         {
-            let alert = UIAlertController(title: "ErrorHandle", message: "Please fill in all fields", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Error", message: "Please fill in all fields", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
-                NSLog("The \"OK\" alert occured.")}))
+                NSLog("The error alert occured.")}))
+            present(alert, animated: true, completion: nil)
+        }
+        else if (windSpeed == "" || windDirection == ""){
+            let alert = UIAlertController(title: "Error", message: "Please fill in all fields", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
+                NSLog("The error alert occured.")}))
             present(alert, animated: true, completion: nil)
         }
         else{
-            let insertChemical = self.chemicalsTable.insert(self.chemName <- chemNameToAdd!, self.chemType <- chemTypeToAdd!, self.field <- fieldToAdd!, self.fieldSize <- fieldSizeToAdd!, self.date <- dateToAdd, self.location <- locationToAdd!, self.rate <- rateToAdd!, self.weather <- weatherToAdd!, self.tankSize <- tankSizeToAdd!)
+            let insertChemical = self.chemicalsTable.insert(self.chemName <- chemNameToAdd!, self.chemType <- chemTypeToAdd!, self.field <- fieldToAdd!, self.fieldSize <- fieldSizeToAdd!, self.date <- dateToAdd, self.location <- locationToAdd!, self.rate <- rateToAdd!, self.weather <- weatherToAdd, self.tankSize <- tankSizeToAdd!)
             
             do{
                 try self.db.run(insertChemical)
@@ -109,6 +168,8 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate {
                 for chemical in chemicals{
                     print("chemical: \(chemical[self.chemName])")
                     print("date: \(chemical[self.date])")
+                    print("weather: \(chemical[self.weather])")
+                    print("id: \(chemical[self.rowID])")
                 }
             }
             catch{
@@ -153,6 +214,14 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fieldSizePicker.delegate = self
+        ratePicker1.delegate = self
+        ratePicker2.delegate = self
+        tankPicker.delegate = self
+        ratePicker1.dataSource = self
+        fieldSizePicker.dataSource = self
+        ratePicker2.dataSource = self
+        tankPicker.dataSource = self
         // Do any additional setup after loading the view, typically from a nib.
         do{
             let docDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
