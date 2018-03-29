@@ -355,7 +355,10 @@
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ha3-zo-Olg">
                                                 <rect key="frame" x="21" y="677" width="121" height="57"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" image="Cancel" backgroundImage="Rectangle 3"/>
+                                                <state key="normal" image="Reset" backgroundImage="Rectangle 3"/>
+                                                <connections>
+                                                    <action selector="resetBtnAction:" destination="jMa-Cm-Dpb" eventType="touchUpInside" id="pG2-gk-Pv6"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dbD-Rh-22e">
                                                 <rect key="frame" x="236" y="677" width="121" height="57"/>
@@ -577,6 +580,7 @@
                         <outlet property="fieldSizeInput" destination="9d7-ga-4aH1" id="Wgg-nQ-arb"/>
                         <outlet property="fieldSizePicker" destination="lrv-qZ-4uX" id="yF6-RJ-4vE"/>
                         <outlet property="humidity" destination="e4g-up-3ET" id="2LR-hj-qK9"/>
+                        <outlet property="humidityInput" destination="e4g-up-3ET" id="LPd-4j-biV"/>
                         <outlet property="locationInput" destination="gfn-mx-k8K" id="EPg-1c-8Mh"/>
                         <outlet property="rateInput" destination="2vy-bH-beR" id="3gj-Aa-btC"/>
                         <outlet property="ratePicker1" destination="Hg4-fY-X19" id="qv7-Nd-cfL"/>
@@ -612,11 +616,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Cancel" width="61" height="16"/>
         <image name="Navigation bar" width="375" height="57"/>
         <image name="New Chemical" width="153" height="19"/>
         <image name="Rectangle 3" width="121" height="57"/>
         <image name="Rectangle 3 Copy" width="121" height="57"/>
+        <image name="Reset" width="51" height="16"/>
         <image name="Save" width="44" height="16"/>
         <image name="Status bar" width="375" height="23"/>
         <image name="first" width="30" height="30"/>

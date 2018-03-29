@@ -90,6 +90,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
     @IBOutlet weak var ratePicker2: UIPickerView!
     @IBOutlet weak var tankPicker: UIPickerView!
     @IBOutlet weak var chemicalTypePicker: UIPickerView!
+    @IBOutlet weak var humidityInput: UITextField!
     
     func clearInputs(){
         tankSizeInput.text = ""
@@ -101,9 +102,18 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
         fieldInput.text = ""
         fieldSizeInput.text = ""
         locationInput.text = ""
+        humidityInput.text = ""
     }
     @IBAction func saveChemical(_ sender: UIButton) {
         createChemical()
+        /*let storyBoard: UIStoryboard = UIStoryboard(name: "First", bundle: nil)
+        let nextViewCtrl = storyBoard.instantiateViewController(withIdentifier: "First")
+        self.presentView*/
+    }
+    
+    
+    @IBAction func resetBtnAction(_ sender: Any) {
+        clearInputs()
     }
     
     func createDB(){
@@ -149,7 +159,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
         let windDirection = Double(windDirectionInput.text!)
         let temperature = tempInput.text
         var tankSizeToAdd = Double(tankSizeInput.text!)
-        
+        let humidityToAdd = humidityInput.text
         //checking if some input fields are blank
         if (chemNameToAdd == "" || chemTypeToAdd == "" || fieldToAdd == "" || fieldSizeToAdd == nil || temperature == "")
         {
@@ -167,7 +177,7 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
             present(alert, animated: true, completion: nil)
         }
         //what could this be? YUP YOU GUESSED IT, more input field checking because Swift can't check logical conditions to save its life
-        else if (windSpeed == "" || windDirection == nil){
+        else if (windSpeed == "" || windDirection == nil || humidityToAdd == ""){
             let alert = UIAlertController(title: "Error", message: "Please fill in all fields", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
                 NSLog("The error alert occured.")}))
@@ -180,7 +190,9 @@ class SecondViewController: UIViewController, CLLocationManagerDelegate, UIPicke
             weatherToAdd.append(windSpeed!)
             weatherToAdd.append(",")
             weatherToAdd.append(String(describing: Int(windDirection!)))
-            
+            weatherToAdd.append(",")
+            weatherToAdd.append(humidityToAdd!)
+            print(weatherToAdd)
             let fieldUnits = areaData[fieldSizePicker.selectedRow(inComponent: 0)]
             let rateAreaUnits = areaData[ratePicker2.selectedRow(inComponent: 0)]
             let rateLiquidUnits = liquidData[ratePicker1.selectedRow(inComponent: 0)]
